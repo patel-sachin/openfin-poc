@@ -160,7 +160,7 @@ const Publisher = () => {
             const view = await platform.createView({
                 name: viewName,
                 url: `http://${publisherUrl.host}/chart-renderer.html?index=${index}`,
-                target: openfinIdentityRef.current,
+                target: {name: viewName, uuid: uuid},
                 processAffinity: `ps-${viewName}`,
             }, openfinIdentityRef.current);
 

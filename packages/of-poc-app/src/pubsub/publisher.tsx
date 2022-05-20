@@ -125,7 +125,7 @@ const Publisher = () => {
                 name: viewName,
                 url: `http://${publisherUrl.host}/pubsub-receiver.html`,
                 processAffinity: `ps-${viewName}`,
-                target: openfinIdentityRef.current,
+                target: {name: viewName, uuid: uuid},
             }, openfinIdentityRef.current);
 
             view?.once('destroyed', (payload, args) => {

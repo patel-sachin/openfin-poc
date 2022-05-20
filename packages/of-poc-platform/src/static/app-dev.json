@@ -1,0 +1,73 @@
+{
+    "licenseKey": "your-license-here",
+    "runtime": {
+        "arguments": "--v=1 --inspect",
+        "version": "stable"
+    },
+    "platform": {
+        "uuid": "platform_customization_local",
+        "title": "My App",
+        "autoShow": true,
+        "providerUrl": "http://localhost:3200/provider.html",
+        "permissions": {
+            "ExternalWindow": {
+                "wrap": true
+            },
+            "System": {
+                "getAllExternalWindows": true,
+                "launchExternalProcess": true,
+                "readRegistryValue": false,
+                "terminateExternalProcess": true
+            }
+        },
+        "defaultWindowOptions": {
+            "url": "http://localhost:3200/platform.html",
+            "contextMenuSettings": {
+                "reload": true,
+                "devtools": true,
+                "enable": true
+            },
+            "autoShow": true,
+            "showTaskbarIcon": true,
+            "defaultWidth": 900,
+            "defaultHeight": 720,
+            "defaultLeft": 0,
+            "defaultTop": 0,
+            "saveWindowState": false,
+            "backgroundThrottling": true,
+            "minHeight": 445,
+            "minWidth": 354,
+            "experimental": {
+                "analytics": false
+            }
+        },
+        "defaultViewOptions": {
+            "experimental": {
+                "childWindows": true,
+                "analytics": false
+            }
+        },
+        "commands": [
+            {
+                "command": "stack.nextTab",
+                "keys": "Ctrl+Tab"
+            }
+        ]
+    },
+    "snapshot": {
+        "windows": [
+            {
+                "name": "Seed Window",
+                "layout": {
+                    "content": [
+                        {
+                            "type": "stack",
+                            "id": "no-drop-target",
+                            "content": []
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

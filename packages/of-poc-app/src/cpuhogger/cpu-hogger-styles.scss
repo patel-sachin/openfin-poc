@@ -1,0 +1,47 @@
+@import './../index.css';
+.App {
+    text-align: center;
+}
+
+.App-header {
+    margin: 0;
+    padding: 0;
+    background-color: #28292c;
+    /* min-height: 100vh; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* font-size: calc(10px + 2vmin); */
+    color: white;
+    border: 0.5px solid #484848;
+}
+
+.btn {
+    width: 100px;
+    height: 40px;
+    margin: 25px;
+    background-color: #83bbed;
+}
+
+.loopInfo {
+    margin: 5px;
+    padding: 5px;
+    background-color: #28292c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: 0.5px solid #484848;
+}
+
+.textArea {
+    width: 60%;
+    height: 100px;
+    margin: 10px;
+    padding: 10px;
+    color: black;
+    border: 2px solid #1d6db8;
+    border-radius: 5px;
+}

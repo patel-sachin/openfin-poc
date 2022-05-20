@@ -1,0 +1,44 @@
+[
+    {
+        "appId": "cpu-hogger",
+        "name": "cpu-hogger",
+        "title": "POC-App - CPU Hogger",
+        "description": "Clicking the 'Block Renderer' button will run a tight loop that will block the renderer thread.\nOpen multiple of these to test if the views are using different renderer threads",
+        "manifest": "http://localhost:3100/views/of-poc-apps/of-poc-cpu-hogger.json",
+        "manifestType": "view",
+        "icons": [{ "src": "http://localhost:3100/views/of-poc-apps/of-poc-react.ico" }],
+        "contactEmail": "spatel@eagleseven.com",
+        "supportEmail": "spatel@eagleseven.com",
+        "publisher": "Eagle Seven LLC",
+        "images": [],
+        "tags": ["view"]
+    },
+    {
+        "appId": "poc-app-pubsub-publisher",
+        "name": "poc-app-pubsub-publisher",
+        "title": "POC App - PubSub/Publisher",
+        "description": "Uses OpenFin ChannelAPI to pushlish messages to receivers.\nOpen multiple receivers -> move your mouse in the publisher -> see the mouse location update in the receivers.",
+        "manifest": "http://localhost:3100/views/of-poc-apps/of-poc-app-publisher.json",
+        "manifestType": "view",
+        "icons": [{ "src": "http://localhost:3100/views/of-poc-apps/of-poc-react.ico" }],
+        "contactEmail": "spatel@eagleseven.com",
+        "supportEmail": "spatel@eagleseven.com",
+        "publisher": "Eagle Seven LLC",
+        "images": [],
+        "tags": ["view"]
+    },
+    {
+        "appId": "poc-app-chart-loader",
+        "name": "poc-app-chart-loader",
+        "title": "POC App - Chart Loader",
+        "description": "Chart Loader publishes random chart data via ChannelAPI -> Chart Renderers will render the charts.\n'Open' button opens multiple Chart Renderers.\n'Create 1' button only creates on Chart Renderer.\n'Start' button start the publishing of random data.\n'Stop' button stops publishing.\n'Close All' button closes all the Chart Renderers.",
+        "manifest": "http://localhost:3100/views/of-poc-apps/of-poc-app-chart-loader.json",
+        "manifestType": "view",
+        "icons": [{ "src": "http://localhost:3100/views/of-poc-apps/of-poc-react.ico" }],
+        "contactEmail": "spatel@eagleseven.com",
+        "supportEmail": "spatel@eagleseven.com",
+        "publisher": "Eagle Seven LLC",
+        "images": [],
+        "tags": ["view"]
+    }
+]

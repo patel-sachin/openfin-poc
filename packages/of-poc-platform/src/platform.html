@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>E7 Platform Window</title>
+        <link rel="stylesheet" href="./styles/index.css" />
+        <script type="module" src="./js/platform.js"></script>
+        <script type="module" src="./js/left-menu.js"></script>
+        <script type="module" src="./js/title-bar.js"></script>
+        <!-- <script type="module" src="./platformwindow/platform.ts"></script>
+        <script type="module" src="./platformwindow/left-menu.ts"></script>
+        <script type="module" src="./platformwindow/title-bar.ts"></script> -->
+    </head>
+    <body>
+        <div id="of-frame-main">
+            <title-bar id="title-bar"></title-bar>
+            <div id="body-container">
+                <left-menu class="hidden"></left-menu>
+                <div class="two-sided-container">
+                    <div id="layout-container" class="face"></div>
+                    <layout-form class="face hidden"></layout-form>
+                    <snapshot-form class="face hidden"></snapshot-form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

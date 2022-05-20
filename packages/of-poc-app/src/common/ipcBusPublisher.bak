@@ -1,0 +1,159 @@
+import { ChannelProvider } from "openfin-adapter/src/api/interappbus/channel/provider";
+import { fin } from "openfin-adapter/src/mock";
+// import { ExampleDataGenerator } from "../ExampleData/ExampleDataGenerator";
+// import { IChartData } from "../ExampleData/Shapes";
+import { pubSubChannelProviderId, ETopic } from "./messaging";
+// import { create_UUID } from "./uuidUtil";
+
+export class IpcBusPublisher {
+    private static instance: IpcBusPublisher;
+    // private _exampleDataGenerator: ExampleDataGenerator;
+    private _isDefaultActionSet: boolean;
+    private _worker: Worker;
+    // private _sharedWorker: SharedWorker;
+    private _isDataGenerationStopped: boolean;
+    
+    private constructor(private _isRunningInOpenFin: boolean, private _channelProvider?: ChannelProvider) {
+        this._isDefaultActionSet = false;
+        this._isDataGenerationStopped = false;
+        // Object.values(ETopic).forEach(v => this.registerTopic(v, this._channelProvider));
+        
+        // this._exampleDataGenerator = new ExampleDataGenerator(
+        //     (payload: IChartData) => this.publishTopicDataAsync(ETopic.ChartData, payload),
+        //     () => this.publishTopicDataAsync(ETopic.ChartDataGenerationStarting, undefined),
+        //     () => this.publishTopicDataAsync(ETopic.ChartDataGenerationStopped, undefined)
+        // );
+
+        this._worker = new Worker(new URL('./GenerateDataWorker.ts', import.meta.url));
+        // this._sharedWorker = new SharedWorker('./ipcPublisherWorker.js');
+        this._worker.onmessage = (message) => this.handleWorkerMessage(message);
+        // this._sharedWorker.port.postMessage('Sachin');
+    }
+
+    private async handleWorkerMessage(message: any) {
+        if (!message) {
+            return;
+        };
+
+        switch (message.data.type) {
+            case 'chart-data':
+                this.publishTopicDataAsync(ETopic.ChartData, message.data.payload);
+                break;
+            case 'start':
+                this._isDataGenerationStopped = false;
+                console.log('worker -> ipcPublisher | start');
+                this.publishTopicDataAsync(ETopic.ChartDataGenerationStarting, message.data.payload);
+                break;
+            case 'stop':
+                this._isDataGenerationStopped = true;
+                console.log('worker -> ipcPublisher | stop');
+                this.publishTopicDataAsync(ETopic.ChartDataGenerationStopped, message.data.payload);
+                break;
+        };
+    }
+
+    private registerTopic(topic: ETopic, channelProvider?: ChannelProvider): void {
+        if (!this._isRunningInOpenFin || !channelProvider) {
+            return;
+        }
+
+        try {
+            console.log(`ipcBusPublisher: registering topic '${topic}' on provider '${pubSubChannelProviderId}'`);
+            const rv = channelProvider.register(topic, (payload, identity) => {
+                console.log(`ipcBusPublisher: topic '${topic}' -> received payload '${payload}'`);
+                return { ack: true, payload };
+            });
+
+            if (!rv) {
+                console.error(`ipcBusPublisher | register topic failed | ${topic}`);
+                return;
+            }
+
+            if (!this._isDefaultActionSet) {
+                channelProvider.setDefaultAction((topic, payload, senderIdentity) => {
+                    return {ack: true};
+                });
+                this._isDefaultActionSet = true;
+            }
+        } catch (error) {
+            console.error(`ipcBusPublisher | exception while registering topic ${topic}`, error);
+        }
+    }
+
+    public async publishTopicDataAsync(topic: ETopic, data: any): Promise<void> {
+        if (!this._isRunningInOpenFin || !this._channelProvider) {
+            return;
+        }
+
+        if (this._isDataGenerationStopped && topic === ETopic.ChartData) {
+            return;
+        }
+
+        try {
+            const startTime = Date.now();
+            // const diffWithWorker = startTime - data.workerSentTime;
+            const dataToSend = { ...data, ipcSentTime: startTime };
+            await Promise.all(this._channelProvider.publish(topic, dataToSend));
+            // await this._channelProvider.publish(topic, dataToSend);
+            // this._channelProvider.publish(topic, dataToSend);
+            // const diff = Date.now() - startTime;
+
+            // const chartData: IChartData = data as IChartData;
+            // if (chartData) {
+            //     console.log(`ipcBusPublisher | publishTopicDataAsync | ${topic} | connections: ${this._channelProvider.connections.length} | counter: ${data.counter} | worker -> this: ${diffWithWorker.toFixed(2)} | this -> clients: ${diff.toFixed(2)} `);
+            // } else {
+            //     console.log(`ipcBusPublisher | publishTopicDataAsync | ${topic} | connections: ${this._channelProvider.connections.length} | worker -> this: ${diffWithWorker.toFixed(2)} | this -> clients: ${diff.toFixed(2)} `);
+            // }
+        } catch (error) {
+            console.log('publish error: ', error);
+        }
+    }
+
+    public startPublishingChartData() {
+        console.log('ipcPublisher -> worker: start');
+        this._worker.postMessage({ action: 'start' });
+        // this._exampleDataGenerator.start();
+    }
+
+    public stopPublishingChartData() {
+        console.log('ipcPublisher -> worker: stop');
+        this._worker.postMessage({ action: 'stop' });
+        // this._exampleDataGenerator.stop();
+    }
+
+    public nextChartData() {
+        console.log('ipcPublisher -> worker: next');
+        this._worker.postMessage({ action: 'next' });
+        // this._exampleDataGenerator.stop();
+    }
+
+    public static async getInstanceAsync(): Promise<IpcBusPublisher> {
+        if (IpcBusPublisher.instance) {
+            console.log(`ipcBusPublisher | getInstanceAsync | returning existing instance`);
+            return IpcBusPublisher.instance;
+        }
+
+        const isRunningInOpenFin = window.fin?.Application?.isOpenFinEnvironment() ? true : false;
+        
+        const channelProvider = isRunningInOpenFin
+            ? await this.tryCreateChannelProviderAsync()
+            : undefined;
+
+        console.log(`ipcBusPublisher | getInstanceAsync | creating new instance`);
+        IpcBusPublisher.instance = new IpcBusPublisher(isRunningInOpenFin, channelProvider);
+        
+        console.log(`ipcBusPublisher | getInstanceAsync | returning new instance`);
+        return IpcBusPublisher.instance;
+    }
+
+    private static async tryCreateChannelProviderAsync(): Promise<ChannelProvider | undefined> {
+        let channelProvider: ChannelProvider | undefined;
+        try {
+            channelProvider = await fin.InterApplicationBus.Channel.create(pubSubChannelProviderId, { protocols: ['rtc'] });
+        } catch (error) {
+            console.error('ipcBusPublisher | tryCreateChannelProviderAsync | failed to create Channel', error);
+        }
+        return channelProvider;
+    }
+}
+

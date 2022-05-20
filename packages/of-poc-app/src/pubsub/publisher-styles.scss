@@ -1,0 +1,78 @@
+@import '../index.css';
+
+.App {
+    text-align: center;
+    width: 100%;
+    // background-color: cadetblue;
+}
+
+.App > h3 {
+    margin: 10px;
+}
+
+.App-header {
+    margin: auto;
+    padding: 10px;
+    background-color: #044e6e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: 0.5px solid #484848;
+}
+
+.btn {
+    width: auto;
+    height: auto;
+    margin: 5px;
+    padding: 5px 15px;
+    background-color: #83bbed;
+    border: 0;
+}
+
+.btn:hover {
+    background-color: #90c3f1;
+}
+
+.num-subscribers-container {
+    margin: 20px auto;
+    padding: 10px;
+    display: flexbox;
+}
+
+#numSubscribers {
+    margin: auto 10px;
+    padding: 4px;
+    width: 80px;
+    font-size: 1em;
+    height: auto;
+}
+
+.mouse-move-area {
+    background-color: blanchedalmond;
+    color: black;
+    margin: 20px auto;
+    width: 400px;
+    height: 100px;
+    display: flex;
+}
+
+.mouse-move-area > p {
+    margin: auto;
+}
+
+pre {
+	box-sizing: border-box;
+	width: 40%;
+	padding: 10px;
+	margin: auto;
+	overflow: auto;
+	overflow-y: hidden;
+	font-size: 12px;
+	line-height: 20px;
+	background: #efefef;
+	border: 1px solid #777;
+	color: #333;
+    text-align: left;
+}

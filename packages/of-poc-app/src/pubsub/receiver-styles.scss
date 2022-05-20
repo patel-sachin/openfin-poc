@@ -1,0 +1,26 @@
+@import '../index.css';
+
+.App {
+    text-align: center;
+    width: 100%;
+    background-color: #855b24;
+}
+
+.App-header {
+    margin: auto;
+    padding: auto;
+    background-color: #28292c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: 0.5px solid #484848;
+}
+
+.btn {
+    width: 100px;
+    height: 40px;
+    margin: 25px;
+    background-color: #83bbed;
+}

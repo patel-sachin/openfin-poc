@@ -1,0 +1,290 @@
+{
+    "$schema": "https://json.schemastore.org/openfin.json",
+    "devtools_port": 9090,
+    "licenseKey": "your-license-here",
+    "runtime": {
+        "arguments": "--v=1 --inspect",
+        "version": "23.96.68.*"
+    },
+    "startup_app": {
+        "name": "workspace-starter-how-to-customize-workspace"
+    },
+    "platform": {
+        "name": "workspace-starter-how-to-customize-workspace",
+        "uuid": "customize-workspace",
+        "icon": "http://localhost:3100/icons/favicon.ico",
+        "autoShow": true,
+        "providerUrl": "http://localhost:3100/provider.html",
+        "preventQuitOnLastWindowClosed": false,
+        "permissions": {
+            "System": {
+                "launchExternalProcess": true,
+                "enableNativeWindowIntegrationProvider": true,
+                "terminateExternalProcess": true,
+                "downloadAsset": true,
+                "openUrlWithBrowser": {
+                    "enabled": true,
+                    "protocols": ["mailto"]
+                }
+            }
+        },
+        "defaultWindowOptions": {
+            "cornerRounding": {
+                "width": 0,
+                "height": 0
+            },
+            "permissions": {
+                "System": {
+                    "openUrlWithBrowser": {
+                        "enabled": true,
+                        "protocols": ["mailto"]
+                    }
+                }
+            }
+        },
+        "viewProcessAffinityStrategy": "different"
+    },
+    "snapshot": {
+        "windows": []
+    },
+    "appAssets": [],
+    "customSettings": {
+        "bootstrap": {
+            "home": true,
+            "store": false,
+            "notifications": false
+        },
+        "platformProvider": {
+            "rootUrl": "http://localhost:3100",
+            "enableNativeWindowIntegration": true
+        },
+        "appProvider": {
+            "appsSourceUrl": "http://localhost:3100/configs/apps.json",
+            "includeCredentialOnSourceRequest": "include",
+            "cacheDurationInMinutes": 1,
+            "appAssetTag": "appasset"
+        },
+        "browserProvider": {
+            "windowOptions": {
+                "title": "Browser Starter",
+                "icon": "http://localhost:3100/icons/favicon.ico",
+                "newTabUrl": null,
+                "newPageUrl": null
+            },
+            "toolbarButtons": [
+                {
+                    "include": true,
+                    "id": "change-opacity",
+                    "button": {
+                        "type": "Custom",
+                        "tooltip": "Change Opacity",
+                        "disabled": false,
+                        "iconUrl": "http://localhost:3100/icons/favicon.ico",
+                        "action": {
+                            "id": "change-opacity",
+                            "customData": {
+                                "sourceId": "change-opacity",
+                                "replacementId": "restore-opacity"
+                            }
+                        }
+                    }
+                },
+                {
+                    "include": false,
+                    "id": "restore-opacity",
+                    "button": {
+                        "type": "Custom",
+                        "tooltip": "Restore Opacity",
+                        "disabled": false,
+                        "iconUrl": "http://localhost:3100/icons/favicon.ico",
+                        "action": {
+                            "id": "restore-opacity",
+                            "customData": {
+                                "sourceId": "restore-opacity",
+                                "replacementId": "change-opacity"
+                            }
+                        }
+                    }
+                },
+                {
+                    "include": true,
+                    "id": "home-show",
+                    "button": {
+                        "type": "Custom",
+                        "tooltip": "Show Home",
+                        "disabled": false,
+                        "iconUrl": "http://localhost:3100/icons/search.svg",
+                        "action": {
+                            "id": "home-show",
+                            "customData": {}
+                        }
+                    }
+                },
+                {
+                    "include": true,
+                    "id": "pin-window",
+                    "button": {
+                        "type": "Custom",
+                        "tooltip": "Pin this window",
+                        "disabled": false,
+                        "iconUrl": "http://localhost:3100/icons/pin.svg",
+                        "action": {
+                            "id": "pin-window",
+                            "customData": {
+                                "sourceId": "pin-window",
+                                "replacementId": "unpin-window"
+                            }
+                        }
+                    }
+                },
+                {
+                    "include": false,
+                    "id": "unpin-window",
+                    "button": {
+                        "type": "Custom",
+                        "tooltip": "Unpin this window",
+                        "disabled": false,
+                        "iconUrl": "http://localhost:3100/icons/pin-vertical.svg",
+                        "action": {
+                            "id": "unpin-window",
+                            "customData": {
+                                "sourceId": "unpin-window",
+                                "replacementId": "pin-window"
+                            }
+                        }
+                    }
+                },
+                {
+                    "include": true,
+                    "id": "show-hide-tabs",
+                    "button": {
+                        "type": "ShowHideTabs"
+                    }
+                },
+                {
+                    "include": true,
+                    "id": "color-linking",
+                    "button": {
+                        "type": "ColorLinking"
+                    }
+                },
+                {
+                    "include": true,
+                    "id": "preset-layouts",
+                    "button": {
+                        "type": "PresetLayouts"
+                    }
+                },
+                {
+                    "include": true,
+                    "id": "share",
+                    "button": {
+                        "type": "Custom",
+                        "tooltip": "Share",
+                        "disabled": false,
+                        "iconUrl": "http://localhost:3100/icons/share.svg",
+                        "action": {
+                            "id": "share",
+                            "customData": {}
+                        }
+                    }
+                },
+                {
+                    "include": true,
+                    "id": "save-page",
+                    "button": {
+                        "type": "SavePage"
+                    }
+                }
+            ]
+        },
+        "themeProvider": {
+            "themes": [
+                {
+                    "label": "Starter Theme",
+                    "logoUrl": "http://localhost:3100/icons/favicon.ico",
+                    "palette": {
+                        "brandPrimary": "#504CFF",
+                        "brandSecondary": "#383A40",
+                        "backgroundPrimary": "#111214",
+                        "functional1": null,
+                        "functional2": null,
+                        "functional3": null,
+                        "functional4": null,
+                        "functional5": null,
+                        "functional6": null,
+                        "functional7": null,
+                        "functional8": null,
+                        "functional9": null,
+                        "functional10": null,
+                        "statusSuccess": null,
+                        "statusWarning": null,
+                        "statusCritical": null,
+                        "statusActive": null,
+                        "inputBg": null,
+                        "inputColor": null,
+                        "inputPlaceholder": null,
+                        "inputDisabled": null,
+                        "inputFocused": null,
+                        "textDefault": null,
+                        "textHelp": null,
+                        "textInactive": null,
+                        "background1": null,
+                        "background2": null,
+                        "background3": null,
+                        "background4": null,
+                        "background5": null,
+                        "background6": null
+                    }
+                },
+                {
+                    "label": "Mantine Dark",
+                    "logoUrl": "http://localhost:3100/icons/favicon.ico",
+                    "palette": {
+                        "brandPrimary": "#504CFF",
+                        "brandSecondary": "#383A40",
+                        "backgroundPrimary": "#111214",
+                        "functional1": null,
+                        "functional2": null,
+                        "functional3": null,
+                        "functional4": null,
+                        "functional5": null,
+                        "functional6": null,
+                        "functional7": null,
+                        "functional8": null,
+                        "functional9": null,
+                        "functional10": null,
+                        "statusSuccess": null,
+                        "statusWarning": null,
+                        "statusCritical": null,
+                        "statusActive": null,
+                        "inputBg": null,
+                        "inputColor": null,
+                        "inputPlaceholder": null,
+                        "inputDisabled": null,
+                        "inputFocused": null,
+                        "textDefault": null,
+                        "textHelp": null,
+                        "textInactive": null,
+                        "background1": "#373A40",
+                        "background2": null,
+                        "background3": null,
+                        "background4": null,
+                        "background5": null,
+                        "background6": null
+                    }
+                }
+            ]
+        },
+        "homeProvider": {
+            "id": "customize-workspace",
+            "title": "Home Starter",
+            "icon": "http://localhost:3100/icons/favicon.ico",
+            "queryMinLength": 3,
+            "queryAgainst": ["title"]
+        },
+        "integrationProvider": {
+            "integrations": []
+        }
+    }
+}

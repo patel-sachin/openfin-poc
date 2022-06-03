@@ -1,4 +1,4 @@
-import {IXyValues} from "./Shapes";
+import { IXyValues } from './Shapes';
 
 export class RandomWalkGenerator {
     private readonly bias: number;
@@ -6,13 +6,16 @@ export class RandomWalkGenerator {
     private i: number;
     private shouldStop: boolean;
 
-    constructor(bias: number = 0.01) {
-        this.bias = bias;
+    constructor();
+    constructor(bias: number);
+    constructor(bias?: number) {
+        this.bias = bias ?? 0.01;
         this.last = 0;
         this.i = 0;
         this.shouldStop = false;
         this.reset();
     }
+
     public stop() {
         console.log('RandomWalkGenerator | reset');
         this.shouldStop = true;
@@ -38,6 +41,6 @@ export class RandomWalkGenerator {
             this.last = next;
         }
 
-        return {xValues, yValues};
+        return { xValues, yValues };
     }
 }

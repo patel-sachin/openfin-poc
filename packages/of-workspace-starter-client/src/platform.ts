@@ -28,6 +28,7 @@ export async function init() {
     await workspacePlatformInit({
         browser,
         theme: validateThemes(settings?.themeProvider?.themes),
-        customActions: customActions
+        customActions: customActions,
+
     });
 } 

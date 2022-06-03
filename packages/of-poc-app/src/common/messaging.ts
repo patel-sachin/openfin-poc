@@ -6,8 +6,9 @@ export enum ETopic {
     ChartData = 'chart-data',
     ChartDataGenerationStarting = 'chart-data-generation-starting',
     ChartDataGenerationStopped = 'chart-data-generation-stopped',
+    PublishChartDataSubscriberTimings = 'publish-chart-data-subscriber-timings',
     ChartDataSubscriberTimings = 'chart-data-subscriber-timings',
-} 
+}
 
 export type TMouseLocation = {
     x: number;

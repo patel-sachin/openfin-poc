@@ -11,7 +11,7 @@
     },
     "platform": {
         "name": "workspace-starter-how-to-customize-workspace",
-        "uuid": "customize-workspace",
+        "uuid": "of-ws-poc-506fdb90-4033-49a8-bd4b-8e2ce87408c3",
         "icon": "http://localhost:3100/icons/favicon.ico",
         "autoShow": true,
         "providerUrl": "http://localhost:3100/provider.html",

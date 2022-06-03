@@ -1,17 +1,21 @@
 {
-    "name": "root",
-    "private": true,
-    "workspaces": [
-        "packages/*"
-    ],
-    "scripts": {
-        "build:of-ws": "cd packages && cd of-workspace-starter-client && yarn build:dev",
-        "serve:of-ws": "cd packages && cd of-workspace-starter-client && yarn preview",
-        "launch:of-ws": "cd packages && cd of-workspace-starter-client && yarn launch",
-        "start:poc-app":"cd packages && cd of-poc-app && yarn start"
-    },
-    "devDependencies": {
-        "@types/node": "^17.0.31",
-        "lerna": "^4.0.0"
-    }
+  "name": "@eagleseven/root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build:common": "lerna run --scope=@eagleseven/common --stream build:dev",
+    "build:of-ws": "lerna run --scope=@eagleseven/of-workspace-starter-client --stream build:dev",
+    "serve:of-ws": "yarn kill-port 3100 && lerna run --scope=@eagleseven/of-workspace-starter-client --stream preview",
+    "launch:of-ws": "lerna run --scope=@eagleseven/of-workspace-starter-client --stream launch",
+    "build:of-pw": "lerna run --scope=@eagleseven/of-poc-platform --stream build",
+    "serve:of-pw": "yarn kill-port 4173 && lerna run --scope=@eagleseven/of-poc-platform --stream dev",
+    "launch:of-pw": "lerna run --scope=@eagleseven/of-poc-platform --stream launchd",
+    "start:poc-app": "yarn kill-port 3000 && lerna run --scope=@eagleseven/of-poc-app --stream start"
+  },
+  "devDependencies": {
+    "kill-port": "^2.0.0",
+    "lerna": "^4.0.0"
+  }
 }

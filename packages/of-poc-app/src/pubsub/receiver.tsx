@@ -21,10 +21,10 @@ const Receiver = () => {
         if (!payload) {
             return;
         }
-    
+
         setState((prevState) => ({
             ...prevState,
-            mouseLocation: payload
+            mouseLocation: payload,
         }));
     }
 
@@ -35,7 +35,7 @@ const Receiver = () => {
         let identity: OpenFin.Identity;
         if (fin.me.isWindow) {
             identity = fin.me.identity;
-            viewNameRef.current  = identity.name;
+            viewNameRef.current = identity.name;
         } else if (fin.me.isView) {
             identity = (await fin.me.getCurrentWindow()).identity;
             viewNameRef.current = identity.name;
@@ -45,7 +45,7 @@ const Receiver = () => {
         }
 
         // const ipcBusSubscriber = await IpcBusSubscriber.getInstanceAsync();
-        const ipcBusSubscriber = new IpcBusSubscriber(state.isRunningInOpenFin, identity);
+        const ipcBusSubscriber = await IpcBusSubscriber.createAsync(state.isRunningInOpenFin, identity);
         if (!ipcBusSubscriber) {
             return;
         }
@@ -53,6 +53,7 @@ const Receiver = () => {
         ipcBusSubscriberRef.current = ipcBusSubscriber;
 
         await Promise.all([
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             ipcBusSubscriber.subscribeTopicAsync(ETopic.MouseLocation, (payload, identity) => {
                 console.log(`ChartRenderer | received mouselocation`);
                 setTimeout(() => {
@@ -77,14 +78,16 @@ const Receiver = () => {
             return;
         }
 
-        console.log(`ChartRenderer | useEffect | isOpenFin: ${state.isRunningInOpenFin} | calling initIpcProviderAndSubscribeTopics`);
+        console.log(
+            `ChartRenderer | useEffect | isOpenFin: ${state.isRunningInOpenFin} | calling initIpcProviderAndSubscribeTopics`
+        );
         const initFinRelatedProps = async () => {
             await initIpcProviderAndSubscribeTopics();
             const processInfo = await fin.me.getProcessInfo();
             if (processInfo) {
                 setState((prevState) => ({
                     ...prevState,
-                    pid: processInfo.pid
+                    pid: processInfo.pid,
                 }));
             }
         };
@@ -98,10 +101,9 @@ const Receiver = () => {
             isRunningInOpenFin: isRunningInOpenFin,
         });
 
-
-        return (() => {
+        return () => {
             disposeAsync();
-        });
+        };
         // if (isRunningInOpenFin && !channelClientRef?.current) {
         //     (async () => {
         //         const ipcBusProvider = await IpcBusProvider.getInstanceAsync();
@@ -112,7 +114,6 @@ const Receiver = () => {
         // }
     }, []);
 
-
     const mouseLocationContent = state.mouseLocation ? (
         <h3>{`Mouse Location: X: ${state.mouseLocation.x}, Y: ${state.mouseLocation.y}`} </h3>
     ) : undefined;
@@ -120,7 +121,9 @@ const Receiver = () => {
     return (
         <div className="App">
             <header className="App-header">
-                <h2>Chart Renderer-{url.searchParams.get('index')} (receiver){state.pid ? `  Pid: ${state.pid}` : ''}</h2>
+                <h2>
+                    Chart Renderer-{url.searchParams.get('index')} (receiver){state.pid ? `  Pid: ${state.pid}` : ''}
+                </h2>
                 <h3>IsRunningInOpenFin: {state?.isRunningInOpenFin ? 'true' : 'false'}</h3>
                 <h3>Receiver</h3>
             </header>

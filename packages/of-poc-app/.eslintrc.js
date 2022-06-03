@@ -19,7 +19,7 @@ module.exports = {
             version: 'detect',
         },
     },
-    
+
     // use recommended rules from the following plugins
     extends: [
         'plugin:react/recommended',
@@ -31,7 +31,6 @@ module.exports = {
         'plugin:jsx-a11y/recommended',
         'plugin:eslint-comments/recommended',
         'prettier',
-        'prettier/@typescript-eslint',
         'plugin:prettier/recommended',
     ],
 

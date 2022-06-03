@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -8,19 +8,19 @@ console.log(`__dirname: ${__dirname}`);
 const components = [
     {
         entryName: 'cpu-hogger',
-        path: path.resolve(__dirname, '..', './src/cpuhogger/index.tsx')
+        path: path.resolve(__dirname, '..', './src/cpuhogger/index.tsx'),
     },
     {
         entryName: 'pubsub-publisher',
-        path: path.resolve(__dirname, '..', './src/pubsub/publisher.tsx')
+        path: path.resolve(__dirname, '..', './src/pubsub/publisher.tsx'),
     },
     {
         entryName: 'pubsub-receiver',
-        path: path.resolve(__dirname, '..', './src/pubsub/receiver.tsx')
+        path: path.resolve(__dirname, '..', './src/pubsub/receiver.tsx'),
     },
     {
         entryName: 'chart-loader',
-        path: path.resolve(__dirname, '..', './src/chart/ChartLoader.tsx')
+        path: path.resolve(__dirname, '..', './src/chart/ChartLoader.tsx'),
     },
     {
         entryName: 'chart-renderer',
@@ -28,13 +28,14 @@ const components = [
     },
 ];
 
-const entries = components.reduce((acc, current) => { 
+const entries = components.reduce((acc, current) => {
     acc[current.entryName] = current.path;
     return acc;
 }, {});
 
-const htmlGenerators =components.reduce((acc, current) => { 
-    acc.push(new HtmlWebpackPlugin({
+const htmlGenerators = components.reduce((acc, current) => {
+    acc.push(
+        new HtmlWebpackPlugin({
         inject: true,
         chunks: [current.entryName],
         filename: `${current.entryName}.html`,
@@ -42,7 +43,8 @@ const htmlGenerators =components.reduce((acc, current) => {
         minify: false,
         title: `${current.entryName}`,
         showErrors: true,
-    }));
+        })
+    );
     return acc;
 }, []);
 
@@ -52,25 +54,25 @@ module.exports = {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, '..', './dist/'),
         clean: true,
-        assetModuleFilename: "assets/[name][ext]",
+        assetModuleFilename: 'assets/[name][ext]',
     },
     plugins: [
         ...htmlGenerators,
         new CleanWebpackPlugin({
             protectWebpackAssets: false,
-            cleanAfterEveryBuildPatterns: ['*.js.LICENSE.txt']
+            cleanAfterEveryBuildPatterns: ['*.js.LICENSE.txt'],
         }),
         new CopyPlugin({
             patterns: [
                 {
-                    "from": "./../../node_modules/scichart/_wasm/scichart2d.data",
-                    "to": "./scichart2d.data"
+                    from: './../../node_modules/scichart/_wasm/scichart2d.data',
+                    to: './scichart2d.data',
                 },
                 {
-                    "from": "./../../node_modules/scichart/_wasm/scichart2d.wasm",
-                    "to": "./scichart2d.wasm"
-                }
-            ]
+                    from: './../../node_modules/scichart/_wasm/scichart2d.wasm',
+                    to: './scichart2d.wasm',
+                },
+            ],
         }),
     ],
     resolve: {
@@ -111,12 +113,12 @@ module.exports = {
         ],
     },
     stats: {
-        preset: "minimal",
+        preset: 'minimal',
         env: true,
         entrypoints: true,
         warnings: true,
         errors: true,
         errorDetails: true,
         errorStack: true,
-    }
+    },
 };

@@ -1,26 +1,23 @@
-import { ExampleDataGenerator, EMode } from "../ExampleData/ExampleDataGenerator";
-import { IChartData } from "../ExampleData/Shapes";
+import { ExampleDataGenerator, EMode } from '../ExampleData/ExampleDataGenerator';
+import { IChartData } from '../ExampleData/Shapes';
 
-let dataGenerator: ExampleDataGenerator = new ExampleDataGenerator(
-    EMode.AutoAdvance,
-    (payload: IChartData) => postMessage({ type: 'chart-data', payload: payload }),
-    () => postMessage({ type: 'start', payload: { workerSentTime: Date.now() } }),
-    () => postMessage({ type: 'stop', payload: { workerSentTime: Date.now() } })
+const dataGenerator: ExampleDataGenerator = new ExampleDataGenerator(EMode.AutoAdvance, (payload: IChartData) =>
+    postMessage(payload)
 );
 
-onmessage = function (message) {
-    switch (message.data.action) {
-        case "start":
+onmessage = function (message: MessageEvent<IChartData>) {
+    switch (message.data.type) {
+        case 'start':
             console.log('Worker | onMessage | start');
-            dataGenerator?.start();
+            dataGenerator.start();
             break;
-        case "next":
+        case 'next':
             console.log('Worker | onMessage | next');
-            dataGenerator?.next();
+            dataGenerator.next();
             break;
-        case "stop":
+        case 'stop':
             console.log('Worker | onMessage | stop');
-            dataGenerator?.stop();
+            dataGenerator.stop();
             break;
     }
-}
+};

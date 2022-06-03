@@ -1,5 +1,5 @@
 {
-    "name": "of-workspace-starter-client",
+    "name": "@eagleseven/of-workspace-starter-client",
     "private": true,
     "version": "0.0.0",
     "scripts": {
@@ -15,12 +15,12 @@
         "@openfin/native-window-integration-client": "^0.0.13",
         "@openfin/workspace": "^6.3.6",
         "@openfin/workspace-platform": "^6.3.6",
-        "@types/node": "^17.0.31",
         "file-loader": "^6.2.0"
     },
     "devDependencies": {
+        "@types/node": "^17.0.35",
         "copy-webpack-plugin": "^10.2.4",
-        "openfin-adapter": "^25.69.8",
+        "openfin-adapter": "25.69.8",
         "ts-loader": "^9.3.0",
         "typescript": "^4.6.3",
         "vite": "^2.9.9",
